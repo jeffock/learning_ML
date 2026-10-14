@@ -1,0 +1,7 @@
+build/
+out/
+.vs/
+.vscode/
+__pycache__/
+*.csv
+*.png
