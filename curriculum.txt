@@ -1,0 +1,16 @@
+Tensor struct — just storage (flat buffer + shape) and basic indexing/printing. No math yet. This is also the file you create as an empty stub first, just so CMake has something to configure against.
+Elementwise forward ops (+, −, elementwise ×, scalar ops) and matmul forward — no gradients involved yet, just get the forward math correct and tested against hand-computed examples.
+MSE loss forward — trivial once step 2 works, and it’s the loss you’ll need for the very first training loop.
+Autograd wiring — add requires_grad, parent pointers, and a backward() closure to Tensor, so operations build a graph as they execute.
+Backward for elementwise ops, then backward for matmul (the trickiest one — this is where transpose rules matter), then backward for MSE loss.
+Numerical gradient checking (tests/test_gradients.cpp) — perturb a weight by a small epsilon, compare the measured loss change to your analytical gradient. Don’t proceed past this step until it passes; this is the single highest-leverage test in the whole project, since bugs here are otherwise nearly invisible later.
+Plain SGD optimizer — simplest possible parameter update, needed for the first real training loop.
+Linear regression experiment (experiments/train_linreg.cpp) — your first true end-to-end test: does loss actually decrease and converge on synthetic data using only what you’ve built so far?
+ReLU (or tanh) activation, forward + backward — needed because a single linear layer can’t solve XOR.
+Linear layer class — packages a weight matrix + bias into a reusable unit with its own parameter list, so the optimizer can iterate over “all trainable parameters” generically.
+XOR experiment — validates multi-layer backprop and the Linear layer abstraction together on a tiny, classic nonlinear problem.
+Combined softmax + cross-entropy loss — implement these as one fused op rather than two separate ones; the combined gradient simplifies to (prediction − target), which is both easier to implement correctly and far more numerically stable than naively chaining softmax into cross-entropy.
+AdamW optimizer with weight decay — this is non-negotiable for grokking specifically, since weight decay is the actual mechanism behind the delayed-generalization effect.
+Modular arithmetic dataset generator — all (a, b) pairs mod p, train/test split, one-hot or embedding-table encoding.
+Grokking training script — the payoff experiment. Train far past 100% train accuracy, log train/test accuracy every step, and watch for the delayed jump.
+(Bonus) Embedding extraction + plotting — pull the trained embedding matrix and check for the circular/Fourier structure from the mechanistic interpretability follow-up work.
