@@ -1,4 +1,3 @@
-Tensor struct — just storage (flat buffer + shape) and basic indexing/printing. No math yet. This is also the file you create as an empty stub first, just so CMake has something to configure against.
 Elementwise forward ops (+, −, elementwise ×, scalar ops) and matmul forward — no gradients involved yet, just get the forward math correct and tested against hand-computed examples.
 MSE loss forward — trivial once step 2 works, and it’s the loss you’ll need for the very first training loop.
 Autograd wiring — add requires_grad, parent pointers, and a backward() closure to Tensor, so operations build a graph as they execute.

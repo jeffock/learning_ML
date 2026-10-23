@@ -43,7 +43,7 @@ target_link_libraries(data PUBLIC engine)
 
 enable_testing()
 
-foreach(t test_gradients test_xor)
+foreach(t test_tensor test_gradients test_xor)
     add_executable(${t} tests/${t}.cpp)
     target_link_libraries(${t} PRIVATE nn)
     add_test(NAME ${t} COMMAND ${t})

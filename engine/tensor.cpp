@@ -15,7 +15,7 @@ std::vector<size_t> Tensor::compute_strides(const std::vector<size_t>& shape_) {
 
     size_t running_prod = 1;
 
-    for (int i = static_cast<int>(shape_.size()) - 1; i<=0; --i) {
+    for (int i = static_cast<int>(shape_.size()) - 1; i>=0; --i) {
         strides_[i] = running_prod;
         running_prod *= shape_[i];
     }
@@ -95,7 +95,7 @@ void Tensor::print() const{
     if (numdimensions() == 1) {
         std::cout << " [";
         for (size_t i=0; i<shape[0]; ++i) {
-            std::cout << at({i}) << (i+1 < shape.size() ? ", " : "");
+            std::cout << at({i}) << (i+1 < shape[0] ? ", " : "");
         }
         std::cout << "]\n";
     } else if (numdimensions() == 2) {
